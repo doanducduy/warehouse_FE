@@ -1,0 +1,255 @@
+<div class="w-full">
+    <!-- <app-pagetitle title="{{'PAGE.REPORT.IncidentType' | translate}}" [breadcrumbItems]="breadCrumbItems"></app-pagetitle> -->
+    <app-pagetitle title="{{'QUẢN LÝ TÀI KHOẢN' | translate}}"></app-pagetitle>
+    <div class="card">
+        <div class="card-body">
+            <h5>{{'Danh sách các tài khoản' | translate}}</h5>
+            <div class="d-flex justify-content-end">
+                <!--  -->
+                <!-- <button class="btn btn-success mb-2" (click)="openModal(content)">
+                <i class="mdi mdi-plus mr-2"></i> {{'Thêm Mới' | translate}}
+            </button> -->
+            </div>
+            <div class="row mb-md-2">
+
+            </div>
+            <div class="table-responsive">
+                <table id="basic-datatable" class="table table-bordered dt-responsive nowrap  no-footer dtr-inline">
+                    <thead>
+                        <tr class="bg-table">
+                            <th>STT</th>
+                            <!-- <th width="250">Mã nhân viên</th> -->
+                            <th>Họ tên</th>
+
+                            <th>Địa chỉ</th>
+                            <th>Tên phân xưởng</th>
+                            <!-- <th>{{'Status' | translate}}</th> -->
+                            <th>Chức vụ</th>
+
+                            <!-- <th>{{'Date from' | translate}}</th>
+                        <th>{{'Date to' | translate}}</th> -->
+                            <th width="100">Hoạt động</th>
+                        </tr>
+                    </thead>
+                    <tbody *ngFor="let data of listData;let i=index">
+                        <tr>
+                            <td><a (click)="onDetail(data.id)">{{pageSize*(pageIndex-1) +i+1}}</a></td>
+                            <!-- <td><a (click)="onDetail(data.id)">{{data.manv}}</a></td> -->
+                            <td><a (click)="onDetail(data.id)">{{data.full_name}}</a></td>
+                            <td><a (click)="onDetail(data.id)">{{data.address}}</a></td>
+                            <td><a (click)="onDetail(data.id)">{{data.workspaceName}}</a></td>
+                            <td><a (click)="onDetail(data.id)">{{data.roleName}}</a></td>
+                            <!-- <td>
+                            <span class="font-size-12 badge badge-danger" *ngIf="data.status == '1'">{{'Offline' |
+                                translate}}</span>
+                            <span class="font-size-12 badge badge-success" *ngIf="data.status == '0'">{{'Online' |
+                                translate}}</span>
+                        </td> -->
+
+                            <!-- <td><a (click)="onDetail(data.id)">{{data.created_at  | date:'dd/MM/yyyy HH:mm':'GMT'}}</a></td>
+                        <td><a (click)="onDetail(data.id)">{{data.updated_at  | date:'dd/MM/yyyy HH:mm':'GMT'}}</a></td> -->
+                            <!-- <td><a (click)="onDetail(data.id)">{{data.name_factory}}</a></td>
+                            <td><a (click)="onDetail(data.id)">{{data.level}}</a></td> -->
+                            <td class="py-2 text-center">
+                                <div class="d-flex" style="gap: 5px">
+                                    <a class="font-size-18 text-success" ngbTooltip="{{'Chi tiết' | translate}}"
+                                        (click)="onDetail(data.id)">
+                                        <i class="mdi mdi-eye"></i>
+
+                                    </a>
+                                    <!-- <a class="font-size-18" href="javascript: void(0);" *ngIf="role =='user'" ngbTooltip="{{'FORM.Edit' | translate}}" placement="bottom-left" (click)="onEdit(data, content)">
+                                    <i class="mdi mdi-account-edit"></i>
+                                </a> -->
+                                    <a class="font-size-18 text-danger" ngbTooltip="{{'FORM.Delete' | translate}}"
+                                        placement="bottom-left" (click)="onDelete(data.id)">
+                                        <i class="mdi mdi-delete"></i>
+                                        <!-- {{'FORM.Delete' | translate}} -->
+                                    </a>
+                                    <!-- <a class="font-size-18 text-body" ngbTooltip="{{'FORM.KeywordManager' | translate}}" placement="left" (click)="onOpenKeywordModal(contentKeyword, data)">
+                                    <i class="mdi mdi-cog"></i>
+                                    {{'FORM.KeywordManager' | translate}}
+                                </a> -->
+                                </div>
+
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="row justify-content-md-between align-items-md-center mt-2">
+                <div class="col-sm-12 col-md-5">
+                    <div class="dataTables_info mb-2" id="tickets-table_info" role="status" aria-live="polite">
+                        {{'Showing' | translate}}
+                        {{pageSize*pageIndex - pageSize + 1}}
+                        {{'to' | translate}}
+                        {{pageSize*pageIndex}}
+                        {{'of' | translate}}
+                        {{totalCount}}
+                        {{'entries' | translate}}
+                    </div>
+                </div>
+                <!-- Pagination -->
+                <div class="col-sm-12 col-md-5 d-flex align-items-center justify-content-end">
+
+                    <div class="text-md-right float-md-right pagination-rounded">
+                        <ngb-pagination [collectionSize]="totalCount" [(page)]="pageIndex" [pageSize]="pageSize"
+                            (pageChange)="fetchData()">
+                        </ngb-pagination>
+                    </div>
+                    <div class="dataTables_length ml-3" id="tickets-table_length">
+                        <label class="d-inline-flex align-items-center mb-0"> {{'Show' | translate}}
+                            <select name="tickets-table_length" aria-controls="tickets-table" name="pageSize"
+                                [(ngModel)]="pageSize" (ngModelChange)="pageIndex = 1;fetchData()"
+                                class="custom-select custom-select-sm form-control form-control-sm mx-2">
+                                <option [ngValue]="10">10</option>
+                                <option [ngValue]="25">25</option>
+                                <option [ngValue]="50">50</option>
+                                <option [ngValue]="100">100</option>
+                            </select>
+                            {{'Entries' | translate}}
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <ng-template #content role="document" let-modal="close">
+        <div class="modal-header">
+            <h5 class="modal-title">{{(formData.value.id ? "Chỉnh sửa" : "Thêm mới") | translate}}</h5>
+            <button type="button" class="close" aria-label="Close" (click)="modal('Cross click')">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body p-3">
+            <div class="text-left">
+                <form (ngSubmit)="saveData()" [formGroup]="formData">
+                    <div class="row">
+                        <div class="form-group row col-md-12">
+                            <label class="col-md-2 col-form-label required_label">{{'Họ tên' | translate}}</label>
+                            <div class="col-md-10">
+                                <input type="text" class="form-control" formControlName="full_name"
+                                    [ngClass]="{'is-invalid': submitted && form.full_name.errors}" />
+
+                            </div>
+                        </div>
+                        <div class="form-group row col-md-12">
+                            <label class="col-md-2 col-form-label required_label">{{'Địa chỉ' | translate}}</label>
+                            <div class="col-md-10">
+                                <input type="text" class="form-control" formControlName="address"
+                                    [ngClass]="{'is-invalid': submitted && form.address.errors}" />
+
+                            </div>
+                        </div>
+                        <div class="form-group row col-md-12">
+                            <label class="col-md-2 col-form-label required_label">{{'Số điện thoại' |
+                                translate}}</label>
+                            <div class="col-md-10">
+                                <input type="text" class="form-control" formControlName="phone"
+                                    [ngClass]="{'is-invalid': submitted && form.phone.errors}" />
+
+                            </div>
+                        </div>
+                        <!-- <div class="form-group row col-md-12">
+                        <label class="col-md-2 col-form-label required_label">{{'Mật khẩu' | translate}}</label>
+                        <div class="col-md-10">
+                            <input type="password" class="form-control" formControlName="password"
+                                [ngClass]="{'is-invalid': submitted && form.password.errors}" />
+                          
+                        </div>
+                    </div> -->
+                        <div class="form-group row col-md-12">
+                            <label class="col-md-2 col-form-label required_label">{{'Trạng thái' | translate}}</label>
+                            <div class="col-md-10">
+                                <select class="form-select" aria-label="Default select example" class="form-control"
+                                    formControlName="status"
+                                    [ngClass]="{'is-invalid': submitted && form.status.errors}">
+                                    <option value="{{item}}" *ngFor="let item of listStatus">{{item}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row col-md-12">
+                            <label class="col-md-2 col-form-label required_label">{{'Phân quyền' | translate}}</label>
+                            <div class="col-md-10">
+                                <select class="form-select" aria-label="Default select example" class="form-control"
+                                    formControlName="role_name"
+                                    [ngClass]="{'is-invalid': submitted && form.role_name.errors}">
+                                    <option value="{{item}}" *ngFor="let item of listRole">{{item}}</option>
+                                </select>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="text-right">
+                        <button type="button" class="btn btn-secondary btn-sm mr-3"
+                            (click)="modal('close click')">{{'Đóng' | translate}}</button>
+                        <button type="submit" class="btn btn-primary btn-sm">{{'Lưu' | translate}}</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </ng-template>
+
+
+    <ng-template #contentKeyword let-modalHis="close">
+        <div class="modal-header">
+            <h5 class="modal-title">List keyword of "{{selectedIncident.name}}"</h5>
+            <button type="button" class="close" aria-label="Close" (click)="modalHis('Cross click')">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body p-3">
+            <div class="mb-3" *ngIf="formNewKeyword">
+                <h5 class="font-size-14">Add New Keyword</h5>
+                <form [formGroup]="formNewKeyword" (submit)="onSubmitFormKeyword(2)" class="d-flex">
+                    <input type="text" class="form-control form-control-sm" style="width: 250px" formControlName="name">
+                    <button class="btn btn-primary btn-sm ml-3" style="width: 150px">Add</button>
+                </form>
+            </div>
+            <div class="table-responsive">
+                <table id="basic-datatable" class="table table-bordered dt-responsive nowrap  no-footer dtr-inline">
+                    <thead>
+                        <tr>
+                            <th width="50">#</th>
+                            <th>Name</th>
+                            <!-- <th>Thời gian</th> -->
+                            <th width="170"></th>
+
+                        </tr>
+                    </thead>
+                    <tbody *ngFor="let data of dataKeyword;let i=index">
+                        <tr>
+                            <td>{{i+1}}</td>
+                            <td>
+                                <ng-container *ngIf="selectedKeyword?.id == data.id && formEditKeyword; else normal">
+                                    <form [formGroup]="formEditKeyword" (submit)="onSubmitFormKeyword(1)">
+                                        <input type="text" class="form-control form-control-sm" formControlName="name">
+                                    </form>
+                                </ng-container>
+                                <ng-template #normal>{{data.name}}</ng-template>
+                            </td>
+                            <!-- <td>{{data.created_at*1000 | date:'dd/MM/yyyy HH:mm'}}</td> -->
+                            <td>
+                                <div class="d-flex" style="gap: 10px">
+                                    <a class=" btn btn-sm btn-success" href="javascript: void(0);"
+                                        (click)="editKeyword(data,i)">
+                                        <i class="mdi mdi-account-edit"></i>{{'FORM.Edit' | translate}}</a>
+                                    <a class="text-white btn btn-sm btn-danger" (click)="onDeleteKeyword(data.id)"><i
+                                            class="mdi mdi-delete"></i>{{'FORM.Delete' | translate}}</a>
+                                </div>
+                                <!-- <button class="btn" (click)="editKeyword(data,i)">Sửa</button>
+                            <button>Xoá</button> -->
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </ng-template>
+
+</div>
